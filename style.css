@@ -1,0 +1,25 @@
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#0d0d0d;--card:#1a1a1a;--text:#ffffff;--muted:#e8e8e8;--line:#3a3a3a;--accent:#ffd400;--accent-text:#111111;--ok:#8dffb8;--mid:#ffd400;--bad:#ff8a80;--sel:#2e2800;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:640px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:28px;margin:8px 0;color:var(--accent)}h2{font-size:20px;margin:0 0 8px;color:var(--accent)}strong{color:var(--accent)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin:14px 0}
+.muted{color:var(--muted)}
+.btn{background:var(--accent);color:var(--accent-text);border:0;border-radius:10px;padding:12px 20px;font-size:16px;font-weight:600;cursor:pointer}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:8px 0;font-size:16px;cursor:pointer}
+.opt.sel{border-color:var(--accent);background:var(--sel)}
+.opt.dk{color:var(--muted);font-size:14px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar>div{height:100%;background:var(--accent);transition:width .3s}
+.passage{background:var(--bg);border-left:4px solid var(--accent);padding:12px 14px;border-radius:6px;margin:0 0 14px;white-space:pre-line}
+.tag{display:inline-block;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:6px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px}
+.skill{margin:14px 0}.skill .top{display:flex;justify-content:space-between;font-weight:600;margin-bottom:6px}
+.ok{color:var(--ok)}.mid{color:var(--mid)}.bad{color:var(--bad)}
+ol.todo{padding-left:20px;margin:8px 0}ol.todo li{margin:10px 0}
+details{margin-top:8px}summary{cursor:pointer;font-weight:600}
+.rev{border-top:1px solid var(--line);padding:10px 0;font-size:15px}
