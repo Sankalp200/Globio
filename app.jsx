@@ -38,7 +38,8 @@ function analyse(answers) {
   const overall = Math.round((100 * right) / QUESTIONS.length);
   const min = Math.min(...Object.values(pct));
   let verdict;
-  if (min >= 75) verdict = { t: "Likely ready on these skills", c: "ok", d: "You scored 75% or more in every area. Check listening, speaking and writing before you book." };
+  const weak = Object.keys(pct).filter(k => pct[k] < 75).map(k => SKILLS[k]);
+  if (overall >= 75) verdict = { t: "Likely ready", c: "ok", d: weak.length ? "Your overall score is 75% or more. " + weak.join(" and ") + (weak.length > 1 ? " are" : " is") + " still below 75%, so give extra practice there. Also check listening, speaking and writing before you book." : "You scored 75% or more in every area. Check listening, speaking and writing before you book." };
   else if (overall >= 60 && min >= 50) verdict = { t: "Almost there", c: "mid", d: "Your overall score is solid, but at least one area is still shaky. A few weeks of focused practice should help." };
   else verdict = { t: "Not ready yet", c: "bad", d: "Booking now would be risky. Work on the areas below first, then retake this check." };
   // practice list: missed topics, weakest skill first
@@ -55,7 +56,7 @@ function analyse(answers) {
 function Intro({ start }) {
   return (
     <div>
-      <h1>Am I exam-ready?</h1>
+      <h1>Am I exam-ready? 🇩🇪</h1>
       <p className="muted">A 12-question check for A1 German (Goethe / ÖSD). It covers vocabulary, grammar and reading, takes about 5 minutes, and tells you what to practise before you book.</p>
       <div className="card">
         <p style={{ margin: 0 }}>Answer without a dictionary. If you really don’t know, choose “I don’t know” instead of guessing, which gives you a more honest result.</p>
@@ -65,7 +66,7 @@ function Intro({ start }) {
   );
 }
 
-function Quiz({ answers, setAnswers, idx, setIdx, finish }) {
+function Quiz({ answers, setAnswers, idx, setIdx, finish, home }) {
   const q = QUESTIONS[idx];
   const cur = answers[idx];
   const last = idx === QUESTIONS.length - 1;
@@ -84,7 +85,7 @@ function Quiz({ answers, setAnswers, idx, setIdx, finish }) {
         <button className={"opt dk" + (cur === -1 ? " sel" : "")} onClick={() => pick(-1)}>I don’t know</button>
       </div>
       <div className="row">
-        <button className="btn ghost" disabled={idx === 0} onClick={() => setIdx(idx - 1)}>Back</button>
+        <button className="btn ghost" onClick={() => (idx === 0 ? home() : setIdx(idx - 1))}>Back</button>
         <button className="btn" disabled={cur === undefined} onClick={() => (last ? finish() : setIdx(idx + 1))}>{last ? "See my result" : "Next"}</button>
       </div>
     </div>
@@ -152,8 +153,9 @@ function App() {
   const restart = () => { setAnswers([]); setIdx(0); setStep("intro"); window.scrollTo(0, 0); };
   return (
     <div className="wrap">
+      <div className="brand">Globio : A German Guide</div>
       {step === "intro" && <Intro start={() => setStep("quiz")} />}
-      {step === "quiz" && <Quiz answers={answers} setAnswers={setAnswers} idx={idx} setIdx={setIdx} finish={() => { setStep("result"); window.scrollTo(0, 0); }} />}
+      {step === "quiz" && <Quiz answers={answers} setAnswers={setAnswers} idx={idx} setIdx={setIdx} home={() => { setStep("intro"); window.scrollTo(0, 0); }} finish={() => { setStep("result"); window.scrollTo(0, 0); }} />}
       {step === "result" && <Result answers={answers} restart={restart} />}
     </div>
   );
